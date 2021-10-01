@@ -6,6 +6,7 @@ import android.view.Menu;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 
+import com.example.procurementconstructionindustry.database.DatabaseHelper;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
 
@@ -31,6 +32,8 @@ public class Dashboard extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        DatabaseHelper mydb = new DatabaseHelper(this);
 
         binding = ActivityDashboardBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());

@@ -51,6 +51,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 //
 //            db.execSQL(DatabaseTable.Drug.CREATE_TABLE_STRING);
 
+            db.execSQL(DatabaseTable.User.CREATE_TABLE_STRING);
+
         }catch(Exception e){
             System.out.println("############ database error");
             e.printStackTrace();
