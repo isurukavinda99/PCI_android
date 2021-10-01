@@ -10,7 +10,7 @@ import androidx.annotation.Nullable;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
 
-    public static final String DATABASE_NAME = "carePlusInfo.db";
+    public static final String DATABASE_NAME = "pci_database.db";
 
     public DatabaseHelper(@Nullable Context context) {
         super(context, DATABASE_NAME, null, 1);
@@ -23,35 +23,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         try {
 
-
-//            /*exe crete pms table*/
-//            db.execSQL(DatabaseTable.Patient.CREATE_TABLE_STRING);
-//
-//            db.execSQL(DatabaseTable.Guardian.CREATE_TABLE_STRING);
-//
-//            db.execSQL(DatabaseTable.BeaHeadCard.CREATE_TABLE_STRING);
-//
-//            /*exe create mms tables*/
-//            db.execSQL(DatabaseTable.MealPlan.CREATE_TABLE_STRING);
-//
-//            db.execSQL(DatabaseTable.Portion.CREATE_TABLE_STRING);
-//
-//            db.execSQL(DatabaseTable.PatentHasMealPlan.CREATE_TABLE_STRING);
-//
-//            /*exe create wms tables*/
-//            db.execSQL(DatabaseTable.WorkoutPlan.CREATE_TABLE_STRING);
-//
-//            db.execSQL(DatabaseTable.Exercise.CREATE_TABLE_STRING);
-//
-//            db.execSQL(DatabaseTable.WorkOutReport.CREATE_TABLE_STRING);
-//
-//
-//            /*exe create prms tables*/
-//            db.execSQL(DatabaseTable.Prescription.CREATE_TABLE_STRING);
-//
-//            db.execSQL(DatabaseTable.Drug.CREATE_TABLE_STRING);
-
             db.execSQL(DatabaseTable.User.CREATE_TABLE_STRING);
+            db.execSQL(DatabaseTable.PurchaseOrder.CREATE_TABLE_STRING);
+            db.execSQL(DatabaseTable.Item.CREATE_TABLE_STRING);
+            db.execSQL(DatabaseTable.PurchaseOrderItem.CREATE_TABLE_STRING);
 
         }catch(Exception e){
             System.out.println("############ database error");
