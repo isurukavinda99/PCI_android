@@ -41,15 +41,15 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     }
 
-    public boolean save(String TABLE_NAME , ContentValues contentValues){
+    public long save(String TABLE_NAME , ContentValues contentValues){
         SQLiteDatabase db = getWritableDatabase();
 
         long result = db.insert(TABLE_NAME , null , contentValues);
 
         if (result == -1){
-            return false;
+            return result;
         }else{
-            return true;
+            return result;
         }
 
     }
@@ -62,7 +62,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             * where close ex - "where id = 1" convert this to "id ?" !important dont put 'where' and values inside where closes
             * put null as the parameter when there is no any selection
             * whereArgs this contains values that map to '?' in whew close  ! please putt null when there is no selection args
-            * sorting order look MAD Lab sheet this same as its sorting order
             * this method return cursor object
          */
 

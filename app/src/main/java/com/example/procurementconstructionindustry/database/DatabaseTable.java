@@ -35,6 +35,7 @@ public class DatabaseTable {
         /*Table properties*/
         public static final String ORDER_ID = "order_id";
         public static final String ORDER_SUPPLER = "order_suppler";
+        public static final String ORDER_COMPANY = "order_company";
         public static final String ORDER_PLACEDBY = "order_placedby";
         public static final String ORDER_DELIVERYADDRESS = "order_deliveryaddress";
         public static final String ORDER_STATUS = "order_status";
@@ -46,6 +47,7 @@ public class DatabaseTable {
                 + ORDER_PLACEDBY + " integer not null , "
                 + ORDER_DELIVERYADDRESS + " text not null ,"
                 + ORDER_STATUS + " varchar(30) not null , "
+                + ORDER_COMPANY + " varchar(30) not null , "
                 + "foreign key("+ORDER_SUPPLER+") references "+User.TABLE_NAME+"("+User.USER_ID+") on delete cascade on update cascade , "
                 + "foreign key("+ORDER_PLACEDBY+") references "+User.TABLE_NAME+"("+User.USER_ID+") on delete cascade on update cascade) ";
     }
@@ -87,9 +89,8 @@ public class DatabaseTable {
         /*Create String*/
         public static final String CREATE_TABLE_STRING = "create table if not exists "+TABLE_NAME+" (" +
                 " "+ORDER_ID+" integer not null, " +
-                " "+ITEM_ID+" integer not null , " +
+                " "+ITEM_ID+" varchar(60) not null , " +
                 " foreign key("+ORDER_ID+") references "+PurchaseOrder.TABLE_NAME+"("+PurchaseOrder.ORDER_ID+") on delete cascade on update cascade, " +
-                " foreign key("+ITEM_ID+") references "+Item.ITEM_ID+"("+Item.ITEM_ID+") on delete cascade on update cascade , " +
                 " primary key("+ORDER_ID+" , "+ITEM_ID+"))";
 
     }

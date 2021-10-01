@@ -19,7 +19,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <EditText
-            android:id="@+id/editTextTextPersonName"
+            android:id="@+id/txt_login_user_name"
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:background="@drawable/rc_input_box_blue"
@@ -31,7 +31,7 @@
             android:inputType="textPersonName" />
 
         <EditText
-            android:id="@+id/editTextTextPersonName2"
+            android:id="@+id/txt_login_password"
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:background="@drawable/rc_input_box_blue"
@@ -48,6 +48,7 @@
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:background="@drawable/rc_input_box_blue"
+            android:onClick="login"
             android:text="Login" />
 
     </LinearLayout>
