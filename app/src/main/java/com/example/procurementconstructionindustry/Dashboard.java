@@ -5,7 +5,9 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Menu;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
@@ -16,6 +18,7 @@ import com.example.procurementconstructionindustry.database.DatabaseTable;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
 
+import androidx.annotation.NonNull;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -26,7 +29,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.procurementconstructionindustry.databinding.ActivityDashboardBinding;
 
 import java.util.ArrayList;
-
+import java.util.logging.Level;
 
 
 public class Dashboard extends AppCompatActivity {
@@ -43,19 +46,19 @@ public class Dashboard extends AppCompatActivity {
         mydb = new DatabaseHelper(this);
         super.onCreate(savedInstanceState);
 
-        DatabaseHelper mydb = new DatabaseHelper(this);
+//        DatabaseHelper mydb = new DatabaseHelper(this);
 
         binding = ActivityDashboardBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
         setSupportActionBar(binding.appBarDashboard.toolbar);
-        binding.appBarDashboard.fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+//        binding.appBarDashboard.fab.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+//                        .setAction("Action", null).show();
+//            }
+//        });
         DrawerLayout drawer = binding.drawerLayout;
         NavigationView navigationView = binding.navView;
         // Passing each menu ID as a set of Ids because each
@@ -70,7 +73,8 @@ public class Dashboard extends AppCompatActivity {
 
         itemTags.add("txt_item_1");
 
-        showSupplers();
+//        showSupplers();
+//        loadOrderData();
 
     }
 
@@ -88,31 +92,31 @@ public class Dashboard extends AppCompatActivity {
                 || super.onSupportNavigateUp();
     }
 
-    public void showSupplers(){
-
-        Spinner s = findViewById(R.id.suppler_drop_down);
-
-        ArrayList<String> arrayList = new ArrayList<>();
-
-        String cols [] = {"*"};
-        String where = DatabaseTable.User.USER_LEVEL + " = ? ";
-        String whereArgs [] = {"4"};
-
-        Cursor supplerList = mydb.view(
-                DatabaseTable.User.TABLE_NAME,
-                cols,
-                where,
-                whereArgs,
-                null
-        );
-
-        while(supplerList.moveToNext()){
-            arrayList.add(supplerList.getString(supplerList.getColumnIndexOrThrow(DatabaseTable.User.USER_NAME)));
-        }
-
-        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, arrayList);
-        s.setAdapter(arrayAdapter);
-    }
+//    public void showSupplers(){
+//
+//        Spinner s = findViewById(R.id.suppler_drop_down);
+//
+//        ArrayList<String> arrayList = new ArrayList<>();
+//
+//        String cols [] = {"*"};
+//        String where = DatabaseTable.User.USER_LEVEL + " = ? ";
+//        String whereArgs [] = {"4"};
+//
+//        Cursor supplerList = mydb.view(
+//                DatabaseTable.User.TABLE_NAME,
+//                cols,
+//                where,
+//                whereArgs,
+//                null
+//        );
+//
+//        while(supplerList.moveToNext()){
+//            arrayList.add(supplerList.getString(supplerList.getColumnIndexOrThrow(DatabaseTable.User.USER_NAME)));
+//        }
+//
+//        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, arrayList);
+//        s.setAdapter(arrayAdapter);
+//    }
 
 
 
@@ -123,19 +127,35 @@ public class Dashboard extends AppCompatActivity {
         float inPixelsTxtM= this.getResources().getDimension(R.dimen.rc_txt_m);
 
         LinearLayout items = findViewById(R.id.item_container);
-        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
         lp.setMargins(0, 0, 0, (int)inPixelsTxtM);
 
+        LinearLayout container = new LinearLayout(this);
+        container.setOrientation(LinearLayout.HORIZONTAL);
+
+        LinearLayout.LayoutParams p = new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.MATCH_PARENT);
+        p.weight = 1;
 
         EditText txtItem = new EditText(this);
         txtItem.setHint("Item");
         txtItem.setBackground(getDrawable(R.drawable.rc_input_box_blue));
         txtItem.setHeight((int) inPixelsTxtH);
         txtItem.setPadding((int) inPixelsTxtP,0,(int) inPixelsTxtP,0);
-        txtItem.setLayoutParams(lp);
+        txtItem.setLayoutParams(p);
         txtItem.setTag("txt_item_"+counter);
         itemTags.add("txt_item_"+counter);
-        items.addView(txtItem);
+
+        EditText qty = new EditText(this);
+        qty.setHint("Quantity");
+        qty.setBackground(getDrawable(R.drawable.rc_input_box_blue));
+        qty.setHeight((int) inPixelsTxtH);
+        qty.setPadding((int) inPixelsTxtP,0,(int) inPixelsTxtP,0);
+        qty.setLayoutParams(p);
+
+        container.addView(txtItem);
+        container.addView(qty);
+
+        items.addView(container);
 
         counter++;
 
@@ -242,4 +262,49 @@ public class Dashboard extends AppCompatActivity {
             }
         }
     }
+
+    public void showMoreOrder(@NonNull View v){
+
+        float inPixelsTxtH= this.getResources().getDimension(R.dimen.rc_order_view);
+        LinearLayout container = (LinearLayout) v.getParent();
+
+
+        if((int)inPixelsTxtH == container.getHeight()){
+            LinearLayout.LayoutParams lparams = new LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+            container.setLayoutParams(lparams);
+        }else{
+            LinearLayout.LayoutParams lparams = new LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.MATCH_PARENT, (int)inPixelsTxtH);
+            container.setLayoutParams(lparams);
+        }
+
+
+    }
+
+//    public void loadOrderData(){
+//
+//        float inPixelsTxtH= this.getResources().getDimension(R.dimen.rc_order_view);
+//        float inPixelsTxtP= this.getResources().getDimension(R.dimen.rc_txt_p);
+//
+//        LinearLayout orderParent = findViewById(R.id.view_parent);
+//
+//        LinearLayout orderLay = new LinearLayout(this);
+//
+////        LinearLayout.LayoutParams lparams = new LinearLayout.LayoutParams(
+////                LinearLayout.LayoutParams.MATCH_PARENT, (int)inPixelsTxtH);
+////
+////        order.setLayoutParams(lparams);
+//
+////        orderLay.setPadding(0,(int)inPixelsTxtP,0,(int)inPixelsTxtP);
+//        Button more = new Button(this);
+//        more.setBackground(getDrawable(R.drawable.rc_button_blue));
+//
+//        orderLay.addView(more);
+//
+//        System.out.println(orderParent);
+//
+////        orderParent.addView(orderLay);
+//
+//    }
 }

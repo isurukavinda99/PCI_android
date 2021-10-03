@@ -85,11 +85,13 @@ public class DatabaseTable {
         /*Table properties*/
         public static final String ORDER_ID = "order_id";
         public static final String ITEM_ID = "item_id";
+        public static final String ITEM_QTY = "item_qty";
 
         /*Create String*/
         public static final String CREATE_TABLE_STRING = "create table if not exists "+TABLE_NAME+" (" +
                 " "+ORDER_ID+" integer not null, " +
                 " "+ITEM_ID+" varchar(60) not null , " +
+                " "+ITEM_QTY+" integer , " +
                 " foreign key("+ORDER_ID+") references "+PurchaseOrder.TABLE_NAME+"("+PurchaseOrder.ORDER_ID+") on delete cascade on update cascade, " +
                 " primary key("+ORDER_ID+" , "+ITEM_ID+"))";
 
