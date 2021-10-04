@@ -28,6 +28,9 @@ public class MainActivity extends AppCompatActivity {
         EditText userName = findViewById(R.id.txt_login_user_name);
         EditText password = findViewById(R.id.txt_login_password);
 
+        System.out.println(userName.getText().toString());
+        System.out.println(password.getText().toString());
+
         if(userName.getText().length() != 0){
 
             if(password.getText().length() != 0){
